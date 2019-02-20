@@ -13,6 +13,9 @@ body{
 ul,li{
 	list-style: none;
 }
+.header{
+	position: relative;
+}
 .header img{
 	width: 7.50rem;
 	height: 1rem;
@@ -30,8 +33,8 @@ ul,li{
 .pan .main-pan{
 	width: 7rem;
 	height: 7rem;
-	transform: translateZ(0);
-	/* transition: .1s */
+	/* transform: translateZ(0); */
+	/* transition: .3s linear */
 }
 .deg-img{
 	width: 4.56rem;
@@ -61,6 +64,7 @@ ul,li{
 	display: flex;
 	margin-top: 0.2rem;
 	justify-content: center;
+	position: relative;
 }
 .tools  li{
 	width: 0.77rem;
