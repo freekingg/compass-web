@@ -4,34 +4,86 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="./css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/style.css" />
+		<style type="text/css">
+			.tools #fold {
+				display: none;
+			}
+		</style>
 	</head>
 	<body>
 		<!-- header -->
 		<div class="header">
-			<img src="http://ii.sinelinked.com/miniProgramAssets/compass/logo2.png" >
+			<img src="http://ii.sinelinked.com/miniProgramAssets/compass/logo2.png">
 		</div>
 		<!-- top-tool -->
 		<div class="top-tool">
-			
+
 		</div>
 		<!-- pan -->
 		<div class="pan">
-			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan.png" >
+			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan.png">
 			<img class="deg-img" src="./img/a2.png" alt="" srcset="">
 			<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
 		</div>
 		<!-- tools -->
-		<div class="tools">
-			<ul>
-				<li id="manual">
-					<div class="top">
-						<img src="http://ii.sinelinked.com/miniProgramAssets/compass/005.png" >
-					</div>
-					<p>手动</p>
-				</li>
-			</ul>
+		<ul class="tools">
+			<li id="switch">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/001.png">
+				</div>
+				<p>模式</p>
+			</li>
+			<li id="lock">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/004.png">
+				</div>
+				<p>锁定</p>
+			</li>
+			<li id="manual">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/005.png">
+				</div>
+				<p>手动</p>
+			</li>
+			<li id="fold">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/003.png">
+				</div>
+				<p>收起</p>
+			</li>
+		</ul>
+		<div id="info">
+			<p class="info-t">
+				<strong>方位：</strong><span class="fangwei"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>度数：</strong><span class="deg"></span>
+			</p>
+			<p class="info-t">
+				<strong>经度：</strong><span class="jingdu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong>纬度：</strong><span class="weidu"></span>
+			</p>
 		</div>
+		<div id="allmap"></div>
+		<!-- switchs -->
+		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/gradienter.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FdGp9hXQHaWCaXy6wohRZFWZFjQP791a"></script>
+		<script type="text/javascript">
+			var map = new BMap.Map("allmap");
+			var point = new BMap.Point(116.331398, 39.897445);
+			map.centerAndZoom(point, 12);
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r) {
+				if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+					var mk = new BMap.Marker(r.point);
+					map.addOverlay(mk);
+					map.panTo(r.point);
+					console.log('您的位置：' + (r.point.lng).toFixed(5) + ',' + r.point.lat);
+					document.querySelector(".jingdu").innerHTML =(r.point.lng).toFixed(3);
+					document.querySelector(".weidu").innerHTML =(r.point.lat).toFixed(3);
+				} else {
+					console.log('failed' + this.getStatus());
+				}
+			});
+		</script>
 	</body>
 </html>

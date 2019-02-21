@@ -1,6 +1,4 @@
 window.onload = function(){
-	
-	console.log('load');
 	var alpha = ""
 	var ua = navigator.userAgent.toLowerCase();
 	
@@ -10,12 +8,13 @@ window.onload = function(){
 	
 	// 兼容适配
 	if (/android/.test(ua)) {
+		// alert('android')
 		window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
 		window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerDeg_img, false);
 	
 		function DeviceOrientationHandlerCompass(event) {
-			document.querySelector(".fangwei").innerHTML = check(Math.round(360 - event.alpha));
-			document.querySelector(".deg").innerHTML = Math.round(360 - event.alpha) + '°';
+			// document.querySelector(".fangwei").innerHTML = check(Math.round(360 - event.alpha));
+			// document.querySelector(".deg").innerHTML = Math.round(360 - event.alpha) + '°';
 			compass.style.transform = 'rotate(-' + Math.round(360 - event.alpha) + 'deg)'
 		}
 	
@@ -28,6 +27,7 @@ window.onload = function(){
 	
 	} else {
 		// 非安卓
+		// alert('no-android')
 		window.addEventListener('deviceorientation', function() {
 			DeviceOrientationHandlerCompass(event)
 			DeviceOrientationHandlerDeg_img(event)
@@ -44,7 +44,6 @@ window.onload = function(){
 	
 		}
 	}
-	
 	
 	/* 根据度数判断方位 */
 	// 判断文字
@@ -92,15 +91,19 @@ window.onload = function(){
 	
 	//收起
 	var fold = document.getElementById("fold")
+	var pan = document.querySelector('.pan')
 	var isFold = false
 	fold.addEventListener('touchend', function() {
 		// 取消罗盘监听事件,切换为手动转盘
 		if (isFold) {
-			window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
+			// pan.style.display = 'block'
+			pan.style.maxHeight = '600px'
+
 			this.children[0].classList.remove('active')
 			this.children[1].innerText = '收起'
 		} else {
-			window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
+			// pan.style.display = 'none'
+			pan.style.maxHeight = '0'
 			this.children[0].classList.add('active')
 			this.children[1].innerText = '展开'
 		}
@@ -134,10 +137,12 @@ window.onload = function(){
 		if (isManual) {
 			window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
 			this.children[0].classList.remove('active')
+			pan.classList.add('noAllow')
 			this.children[1].innerText = '手动'
 		} else {
 			window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
 			this.children[0].classList.add('active')
+			pan.classList.remove('noAllow')
 			this.children[1].innerText = '自动'
 		}
 		isManual = !isManual
@@ -163,7 +168,6 @@ window.onload = function(){
 			return
 		}
 	
-		console.log('touchmove')
 		var clientY = e.changedTouches[0].pageY
 		var clientX = e.changedTouches[0].pageX
 		var currentClentY = clientY - panOffsetTop //手指在当前盘上竖向的位置

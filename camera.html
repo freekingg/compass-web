@@ -5,11 +5,9 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
-		<!-- <script type="text/javascript" src="//api.map.baidu.com/api?ak=MFt7pjr6XeaF1u986MPYmfZOwBPStUoW&type=lite&v=1.0"></script> -->
-		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FdGp9hXQHaWCaXy6wohRZFWZFjQP791a"></script>
 
 		<style type="text/css">
-			#allmap {
+			#camera {
 				width: 100%;
 				height: 100%;
 				position: absolute;
@@ -31,7 +29,7 @@
 	</head>
 	<body>
 
-		<div id="allmap"></div>
+		<video id="camera" autoplay playsinline></video>
 
 		<!-- header -->
 		<div class="header">
@@ -39,11 +37,11 @@
 		</div>
 		<!-- top-tool -->
 		<div class="top-tool">
-
 		</div>
+
 		<!-- pan -->
 		<div class="pan noAllow">
-			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png">
+			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png">
 			<img class="deg-img" src="./img/a2.png" alt="" srcset="">
 			<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
 		</div>
@@ -83,39 +81,56 @@
 		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/map.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			var map = new BMap.Map("allmap", {
-				mapType: BMAP_HYBRID_MAP
-			});
-			var point = new BMap.Point(116.404, 39.915);
-			//添加地图类型控件
-			map.addControl(new BMap.MapTypeControl({
-				mapTypes: [
-					BMAP_HYBRID_MAP
-				]
-			}));
-			map.setCurrentCity("北京");
-			map.centerAndZoom(point, 15);
-			
-			
-// 			var change = document.getElementById('change')
-// 			var compass = document.getElementById('compass')
-// 			var panBg = [
-// 				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png',
-// 				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png',
-// 				'http://ii.sinelinked.com/miniProgramAssets/compass/pan.png'
-// 			]
-// 			var num = 0
-// 			change.addEventListener('touchstart',function(){
-// 				this.children[0].classList.add('active')
-// 			})
-// 			change.addEventListener('touchend',function(){
-// 				num++
-// 				if(num>=panBg.length){
-// 					num = 0
-// 				}
-// 				compass.src = panBg[num]
-// 				this.children[0].classList.remove('active')
-// 			})
+			var video = document.getElementById('camera')
+			var clientWidth = document.body.clientWidth
+			var clientHeight = document.body.offsetHeight
+
+			var constraints = window.constraints = {
+				video: {
+					width: { min: 1024, ideal: 1280, max: 1920 },
+					height: { min: 776, ideal: 720, max: 1080 },
+					facingMode: {
+						exact: "environment"
+					}
+				}
+			};
+
+			function handleSuccess(stream) {
+				var videoTracks = stream.getVideoTracks();
+				console.log('Using video device: ' + videoTracks[0].label);
+				video.srcObject = stream;
+			}
+
+			function handleError(error) {
+				alert(error);
+				console.log('getUserMedia error: ' + error.name, error);
+			}
+
+			navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+
+
+
+
+
+			var change = document.getElementById('change')
+			var compass = document.getElementById('compass')
+			var panBg = [
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan.png'
+			]
+			var num = 0
+			change.addEventListener('touchstart', function() {
+				this.children[0].classList.add('active')
+			})
+			change.addEventListener('touchend', function() {
+				num++
+				if (num >= panBg.length) {
+					num = 0
+				}
+				compass.src = panBg[num]
+				this.children[0].classList.remove('active')
+			})
 		</script>
 	</body>
 </html>

@@ -9,9 +9,15 @@ body{
 *{
 	padding: 0;
 	margin: 0;
+	
 }
+ * { touch-action: pan-y; } 
 ul,li{
 	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #666;
 }
 .header{
 	position: relative;
@@ -29,6 +35,9 @@ ul,li{
 	display: flex;
 	justify-content: center;
 	position: relative;
+	transition: .3s max-height;
+	max-height: 800px;
+	overflow: hidden;
 }
 .pan .main-pan{
 	width: 7rem;
@@ -63,13 +72,32 @@ ul,li{
 	height: 1.2rem;
 	display: flex;
 	margin-top: 0.2rem;
-	justify-content: center;
+	justify-content: space-around;
 	position: relative;
 }
 .tools  li{
 	width: 0.77rem;
 	height: 1.2rem;
+	position: absolute;
+	top: 0;
 }
+.tools #switch{
+	left: 0.42rem;
+}
+.tools #lock{
+	left: 1.5rem;
+}
+.tools #manual{
+	right: 1.5rem;
+}
+.tools #fold{
+	right: 0.42rem;
+}
+
+.tools #change{
+	right: 2.6rem;
+}
+
 .tools .top{
 	width: 100%;
 	height: 0.77rem;
@@ -79,6 +107,9 @@ ul,li{
 	align-items: center;
 	justify-content: center;
 }
+.tools .top.active{
+	background: #4e8cee;
+}
 .tools .top img{
 	width: 0.5rem;
 	height: 0.5rem;
@@ -87,4 +118,70 @@ ul,li{
 	font-size: 0.26rem;
 	line-height: 0.5rem;
 	text-align: center;
+}
+
+#info{
+	width: 90%;
+	border-radius: 0.16rem;
+	background: #fff;
+	padding: 0.16rem;
+	margin: 0.30rem auto 0 auto;
+	box-shadow: 0 0 -0.06rem rgba(0,0,0,.5);
+	font-size: 0.26rem;
+}
+
+.switchs_warp{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgba(0,0,0,.5);
+	transition: .3s;
+	opacity: 0;
+	display: none;
+}
+.switch_content{
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+.switch_main{
+	position: absolute;
+	width: 60%;
+	font-size: 0.30rem;
+	padding: 0.1rem 0.3rem;
+	background: #fff;
+	border-radius: 0.20rem;
+	left: 50%;
+	top: 50%;
+	top: -50%;
+	transform: translate(-50%,-50%);
+	transition: .4s;
+}
+.switchs_warp.show .switch_main{
+	top: 50%;
+}
+.switch_main a{
+	display: block;
+	line-height: 0.8rem;
+	border-bottom: 0.01rem solid #ccc;
+	vertical-align: bottom;
+}
+.switch_main a:last-child{
+	border: none;
+}
+.switch_main a strong{
+	font-weight: normal;
+}
+.switch_main a span{
+	font-size: 0.20rem;
+	position: relative;
+	bottom: -0.01rem;
+	color: #999;
+}
+.switchs_warp.show{
+	opacity: 1;
 }
