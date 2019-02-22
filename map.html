@@ -3,10 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<title></title>
+		<title>虎狮罗盘</title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 		<!-- <script type="text/javascript" src="//api.map.baidu.com/api?ak=MFt7pjr6XeaF1u986MPYmfZOwBPStUoW&type=lite&v=1.0"></script> -->
-		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FdGp9hXQHaWCaXy6wohRZFWZFjQP791a"></script>
 
 		<style type="text/css">
 			#allmap {
@@ -30,6 +29,7 @@
 		</style>
 	</head>
 	<body>
+		<div class="scroll">
 
 		<div id="allmap"></div>
 
@@ -43,6 +43,9 @@
 		</div>
 		<!-- pan -->
 		<div class="pan noAllow">
+			<!-- line -->
+			<span class="line line-heng"></span>
+			<span class="line line-shu"></span>
 			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png">
 			<img class="deg-img" src="./img/a2.png" alt="" srcset="">
 			<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
@@ -80,42 +83,70 @@
 				<p>换盘</p>
 			</li>
 		</ul>
+		</div>
 		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/map.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=FdGp9hXQHaWCaXy6wohRZFWZFjQP791a"></script>
 		<script>
 			var map = new BMap.Map("allmap", {
 				mapType: BMAP_HYBRID_MAP
 			});
 			var point = new BMap.Point(116.404, 39.915);
+			map.setCurrentCity("北京");
+			map.centerAndZoom(point, 15);
+			
+			// 添加带有定位的导航控件
+			map.addControl(new BMap.NavigationControl({
+				// LARGE类型
+				type: BMAP_NAVIGATION_CONTROL_LARGE,
+				// 启用显示定位
+				enableGeolocation: true
+			}));
 			//添加地图类型控件
 			map.addControl(new BMap.MapTypeControl({
 				mapTypes: [
 					BMAP_HYBRID_MAP
 				]
 			}));
-			map.setCurrentCity("北京");
-			map.centerAndZoom(point, 15);
 			
+			var geolocationControl = new BMap.GeolocationControl();
+			map.addControl(geolocationControl);
 			
-// 			var change = document.getElementById('change')
-// 			var compass = document.getElementById('compass')
-// 			var panBg = [
-// 				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png',
-// 				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png',
-// 				'http://ii.sinelinked.com/miniProgramAssets/compass/pan.png'
-// 			]
-// 			var num = 0
-// 			change.addEventListener('touchstart',function(){
-// 				this.children[0].classList.add('active')
-// 			})
-// 			change.addEventListener('touchend',function(){
-// 				num++
-// 				if(num>=panBg.length){
-// 					num = 0
-// 				}
-// 				compass.src = panBg[num]
-// 				this.children[0].classList.remove('active')
-// 			})
+
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r) {
+				if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+					var mk = new BMap.Marker(r.point);
+					map.addOverlay(mk);
+					map.panTo(r.point);
+					// alert('您的位置：' + r.point.lng + ',' + r.point.lat);
+				} else {
+					// alert('failed' + this.getStatus());
+				}
+			}, {
+				enableHighAccuracy: true
+			})
+			
+
+			var change = document.getElementById('change')
+			var compass = document.getElementById('compass')
+			var panBg = [
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan.png'
+			]
+			var num = 0
+			change.addEventListener('touchstart', function() {
+				this.children[0].classList.add('active')
+			})
+			change.addEventListener('touchend', function() {
+				num++
+				if (num >= panBg.length) {
+					num = 0
+				}
+				compass.src = panBg[num]
+				this.children[0].classList.remove('active')
+			})
 		</script>
 	</body>
 </html>

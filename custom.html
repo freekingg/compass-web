@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<title>虎狮罗盘</title>
+		<link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+		<style type="text/css">
+			#upLoadBg {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+			}
+
+			.deg-img {
+				display: none;
+			}
+
+			.noAllow {
+				pointer-events: none !important;
+			}
+
+			.tools li p {
+				/* color: #fff; */
+			}
+		</style>
+	</head>
+	<body>
+		<div class="scroll">
+
+		<div id="upLoadBg"></div>
+
+		<!-- header -->
+		<div class="header">
+			<img src="http://ii.sinelinked.com/miniProgramAssets/compass/logo2.png">
+		</div>
+		<!-- top-tool -->
+		<div class="top-tool">
+		</div>
+
+		<!-- pan -->
+		<div class="pan noAllow">
+			<!-- line -->
+			<span class="line line-heng"></span>
+			<span class="line line-shu"></span>
+			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png">
+			<img class="deg-img" src="./img/a2.png" alt="" srcset="">
+			<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
+		</div>
+		<!-- tools -->
+		<ul class="tools">
+			<li id="switch">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/001.png">
+				</div>
+				<p>模式</p>
+			</li>
+			<li id="lock">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/004.png">
+				</div>
+				<p>锁定</p>
+			</li>
+			<li id="manual">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/005.png">
+				</div>
+				<p>手动</p>
+			</li>
+			<li id="fold">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/003.png">
+				</div>
+				<p>收起</p>
+			</li>
+			<li id="change">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/002.png">
+				</div>
+				<p>换盘</p>
+			</li>
+		</ul>
+		<!-- upload -->
+		<button class="upLoad">
+			选择图片
+		</button>
+		<input type="file" id="File"  accept="image/*" />
+		</div>
+		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/map.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			
+			var upLoad = document.querySelector('.upLoad')
+			var File = document.querySelector('#File')
+			var upLoadBg = document.querySelector('#upLoadBg')
+			
+			upLoad.addEventListener('click',()=>{
+				console.log('touchstart');
+				return File.click()
+			})
+			
+			
+			File.addEventListener('change',function(){
+				var file = this.files[0]
+				var fileReader = new FileReader()
+				fileReader.readAsDataURL(file)
+				fileReader.onload = function(){
+					upLoadBg.style.backgroundImage = `url(${this.result})`
+				}
+			})
+			
+			
+			
+			
+			
+
+
+			var change = document.getElementById('change')
+			var compass = document.getElementById('compass')
+			var panBg = [
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan.png'
+			]
+			var num = 0
+			change.addEventListener('touchstart', function() {
+				this.children[0].classList.add('active')
+			})
+			change.addEventListener('touchend', function() {
+				num++
+				if (num >= panBg.length) {
+					num = 0
+				}
+				compass.src = panBg[num]
+				this.children[0].classList.remove('active')
+			})
+		</script>
+	</body>
+</html>

@@ -1,35 +1,80 @@
-html{font-size:13.33333333vw}
-html,body{
-	height: 100%;
-	overflow: hidden;
+html {
+	font-size: 13.33333333vw
 }
-body{
+
+html,
+body {
+	/* height: 100%; */
+	/* max-height: 100vh; */
+}
+
+body {
 	background: url('http://ii.sinelinked.com/miniProgramAssets/compass/bg.jpg');
+	/* overflow: hidden; */
 }
-*{
+
+
+* {
 	padding: 0;
 	margin: 0;
-	
+
 }
- * { touch-action: pan-y; } 
-ul,li{
+
+* {
+	touch-action: pan-y;
+}
+
+ul,
+li {
 	list-style: none;
 }
-a{
+
+a {
 	text-decoration: none;
 	color: #666;
 }
-.header{
+
+.header {
 	position: relative;
 }
-.header img{
+
+.header img {
 	width: 7.50rem;
 	height: 1rem;
 	display: block;
 }
-.top-tool{
-	height: 1.5rem;
+
+.top-tool {
+	/* box-sizing: border-box; */
+	/* padding: 0.3rem; */
+	padding-top: 0.3rem;
+	padding-left: 0.3rem;
+	padding-right: 0.3rem;
+	height: 1rem;
+	display: flex;
+	justify-content: space-between;
 }
+
+.top-tool .weather img {
+	width: 0.80rem;
+}
+
+.top-tool .gradienter {
+	width: 1rem;
+	height: 1rem;
+	border: 0.01rem solid seagreen;
+	position: relative;
+	overflow: hidden;
+}
+
+.top-tool .gradienter .dot {
+	width: 0.09rem;
+	height: 0.09rem;
+	border-radius: 50%;
+	background: red;
+	position: absolute;
+}
+
 .pan {
 	width: 100%;
 	display: flex;
@@ -39,13 +84,38 @@ a{
 	max-height: 800px;
 	overflow: hidden;
 }
-.pan .main-pan{
+
+.line {
+	position: absolute;
+	height: 0.02rem;
+	background: red;
+	/* z-index: 2; */
+	z-index: 0;
+	pointer-events: none;
+}
+
+.line-heng {
+	top: 50%;
+	left: 50%;
+	width: 7rem;
+	transform: translate(-50%, -50%);
+}
+
+.line-shu {
+	top: 0;
+	left: 50%;
+	width: 0.02rem;
+	height: 100%;
+}
+
+.pan .main-pan {
 	width: 7rem;
 	height: 7rem;
 	/* transform: translateZ(0); */
 	/* transition: .3s linear */
 }
-.deg-img{
+
+.deg-img {
 	width: 4.56rem;
 	position: absolute;
 	/* left: 50%;
@@ -59,98 +129,109 @@ a{
 	transform: translateZ(0);
 	pointer-events: none;
 }
-.zhen-img{
+
+.zhen-img {
 	width: 3rem;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	pointer-events: none;
-	transform: translate(-50%,-50%)
+	transform: translate(-50%, -50%)
 }
 
-.tools{
+.tools {
 	height: 1.2rem;
 	display: flex;
 	margin-top: 0.2rem;
 	justify-content: space-around;
 	position: relative;
 }
-.tools  li{
+
+.tools li {
 	width: 0.77rem;
 	height: 1.2rem;
 	position: absolute;
 	top: 0;
 }
-.tools #switch{
+
+.tools #switch {
 	left: 0.42rem;
 }
-.tools #lock{
+
+.tools #lock {
 	left: 1.5rem;
 }
-.tools #manual{
+
+.tools #manual {
 	right: 1.5rem;
 }
-.tools #fold{
+
+.tools #fold {
 	right: 0.42rem;
 }
 
-.tools #change{
+.tools #change {
 	right: 2.6rem;
 }
 
-.tools .top{
+.tools .top {
 	width: 100%;
 	height: 0.77rem;
-	background:#a17040 ;
+	background: #a17040;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.tools .top.active{
+
+.tools .top.active {
 	background: #4e8cee;
 }
-.tools .top img{
+
+.tools .top img {
 	width: 0.5rem;
 	height: 0.5rem;
 }
-.tools li p{
+
+.tools li p {
 	font-size: 0.26rem;
 	line-height: 0.5rem;
 	text-align: center;
 }
 
-#info{
+#info {
 	width: 90%;
 	border-radius: 0.16rem;
 	background: #fff;
 	padding: 0.16rem;
 	margin: 0.30rem auto 0 auto;
-	box-shadow: 0 0 -0.06rem rgba(0,0,0,.5);
+	box-shadow: 0 0 -0.06rem rgba(0, 0, 0, .5);
 	font-size: 0.26rem;
 }
 
-.switchs_warp{
+.switchs_warp {
 	width: 100%;
 	height: 100%;
 	position: fixed;
 	left: 0;
 	top: 0;
-	background: rgba(0,0,0,.5);
+	background: rgba(0, 0, 0, .5);
 	transition: .3s;
 	opacity: 0;
 	display: none;
 }
-.switch_content{
+
+.switch_content {
 	position: relative;
 	left: 0;
 	top: 0;
 	width: 100%;
 	height: 100%;
 }
-.switch_main{
+
+.switch_main {
 	position: absolute;
-	width: 60%;
+	width: 70%;
 	font-size: 0.30rem;
 	padding: 0.1rem 0.3rem;
 	background: #fff;
@@ -158,30 +239,61 @@ a{
 	left: 50%;
 	top: 50%;
 	top: -50%;
-	transform: translate(-50%,-50%);
+	transform: translate(-50%, -50%);
 	transition: .4s;
 }
-.switchs_warp.show .switch_main{
+
+.switchs_warp.show .switch_main {
 	top: 50%;
 }
-.switch_main a{
+
+.switch_main a {
 	display: block;
-	line-height: 0.8rem;
+	line-height: 0.9rem;
 	border-bottom: 0.01rem solid #ccc;
 	vertical-align: bottom;
 }
-.switch_main a:last-child{
+
+.switch_main a:last-child {
 	border: none;
 }
-.switch_main a strong{
+
+.switch_main a strong {
 	font-weight: normal;
 }
-.switch_main a span{
+
+.switch_main a span {
 	font-size: 0.20rem;
 	position: relative;
 	bottom: -0.01rem;
 	color: #999;
 }
-.switchs_warp.show{
+
+.switchs_warp.show {
 	opacity: 1;
+}
+
+.upLoad {
+	width: 40%;
+	height: 0.8rem;
+	border: none;
+	background: #4E8CEE;
+	color: #FFFFFF;
+	border-radius: 0.08rem;
+	letter-spacing: 0.03rem;
+	margin: 0 auto;
+	position: fixed;
+	bottom: 0.6rem;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+#File {
+	display: none;
+}
+
+#upLoadBg {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }

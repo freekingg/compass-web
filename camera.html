@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<title></title>
+		<title>虎狮罗盘</title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 
 		<style type="text/css">
@@ -23,11 +23,12 @@
 			}
 
 			.tools li p {
-				color: #fff;
+				/* color: #fff; */
 			}
 		</style>
 	</head>
 	<body>
+		<div class="scroll">
 
 		<video id="camera" autoplay playsinline></video>
 
@@ -41,6 +42,9 @@
 
 		<!-- pan -->
 		<div class="pan noAllow">
+			<!-- line -->
+			<span class="line line-heng"></span>
+			<span class="line line-shu"></span>
 			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png">
 			<img class="deg-img" src="./img/a2.png" alt="" srcset="">
 			<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
@@ -78,6 +82,7 @@
 				<p>换盘</p>
 			</li>
 		</ul>
+		</div>
 		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/map.js" type="text/javascript" charset="utf-8"></script>
 		<script>

@@ -1,11 +1,13 @@
 window.onload = function(){
+	
+	
 	var alpha = ""
 	var ua = navigator.userAgent.toLowerCase();
 	
 	var compass = document.getElementById("compass") //罗盘元素
 	var deg_img = document.querySelector('.deg-img') //指南针
 	
-	
+	var isAndroid = true
 	// 兼容适配
 	if (/android/.test(ua)) {
 		// alert('android')
@@ -13,35 +15,28 @@ window.onload = function(){
 		window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerDeg_img, false);
 	
 		function DeviceOrientationHandlerCompass(event) {
-			// document.querySelector(".fangwei").innerHTML = check(Math.round(360 - event.alpha));
-			// document.querySelector(".deg").innerHTML = Math.round(360 - event.alpha) + '°';
 			compass.style.transform = 'rotate(-' + Math.round(360 - event.alpha) + 'deg)'
 		}
 	
 		function DeviceOrientationHandlerDeg_img(event) {
-			document.querySelector(".fangwei").innerHTML = check(Math.round(360 - event.alpha));
-			document.querySelector(".deg").innerHTML = Math.round(360 - event.alpha) + '°';
 			deg_img.style.transform = 'rotate(-' + Math.round(360 - event.alpha) + 'deg)'
 	
 		}
 	
 	} else {
 		// 非安卓
-		// alert('no-android')
-		window.addEventListener('deviceorientation', function() {
-			DeviceOrientationHandlerCompass(event)
-			DeviceOrientationHandlerDeg_img(event)
-		}, false);
-	
-		function DeviceOrientationHandlerCompass(event) {
-			// document.getElementById("alpha").innerHTML = Math.round(360 - event.alpha);
+		isAndroid = false
+		window.addEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false);
+		window.addEventListener('deviceorientation', DeviceOrientationHandlerDeg_imgIos, false);
+
+		function DeviceOrientationHandlerCompassIos(event) {
 			compass.style.transform = 'rotate(-' + event.webkitCompassHeading + 'deg)'
 		}
-	
-		function DeviceOrientationHandlerDeg_img(event) {
-			// document.getElementById("alpha").innerHTML = Math.round(360 - event.alpha);
-			deg_img.style.transform = 'rotate(-' + event.webkitCompassHeading + 'deg)'
-	
+
+		function DeviceOrientationHandlerDeg_imgIos(event) {
+			var plpha = event.webkitCompassHeading
+			deg_img.style.transform = 'rotate(-' + plpha + 'deg)'
+
 		}
 	}
 	
@@ -116,16 +111,30 @@ window.onload = function(){
 	var isLock = false
 	lock.addEventListener('touchend', function() {
 		// 取消罗盘监听事件,切换为手动转盘
-		if (isLock) {
-			window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
-			this.children[0].classList.remove('active')
-			this.children[1].innerText = '锁定'
+		if (isAndroid) {
+			if (isLock) {
+				window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
+				this.children[0].classList.remove('active')
+				this.children[1].innerText = '锁定'
+			} else {
+				window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
+				this.children[0].classList.add('active')
+				this.children[1].innerText = '解锁'
+				isManual = false
+			}
 		} else {
-			window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
-			this.children[0].classList.add('active')
-			this.children[1].innerText = '解锁'
-			isManual = false
+			if (isLock) {
+				window.addEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false);
+				this.children[0].classList.remove('active')
+				this.children[1].innerText = '锁定'
+			} else {
+				window.removeEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false)
+				this.children[0].classList.add('active')
+				this.children[1].innerText = '解锁'
+				isManual = false
+			}
 		}
+
 		isLock = !isLock
 	})
 	
@@ -134,17 +143,32 @@ window.onload = function(){
 	var isManual = false
 	manual.addEventListener('touchend', function() {
 		// 取消罗盘监听事件,切换为手动转盘
-		if (isManual) {
-			window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
-			this.children[0].classList.remove('active')
-			pan.classList.add('noAllow')
-			this.children[1].innerText = '手动'
+		if (isAndroid) {
+			if (isManual) {
+				window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
+				this.children[0].classList.remove('active')
+				pan.classList.add('noAllow')
+				this.children[1].innerText = '手动'
+			} else {
+				window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
+				this.children[0].classList.add('active')
+				pan.classList.remove('noAllow')
+				this.children[1].innerText = '自动'
+			}
 		} else {
-			window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
-			this.children[0].classList.add('active')
-			pan.classList.remove('noAllow')
-			this.children[1].innerText = '自动'
+			if (isManual) {
+				window.addEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false);
+				this.children[0].classList.remove('active')
+				pan.classList.add('noAllow')
+				this.children[1].innerText = '手动'
+			} else {
+				window.removeEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false)
+				this.children[0].classList.add('active')
+				pan.classList.remove('noAllow')
+				this.children[1].innerText = '自动'
+			}
 		}
+		
 		isManual = !isManual
 	})
 	
@@ -180,9 +204,5 @@ window.onload = function(){
 		}
 	})
 	
-	// 处理各浏览器下下拉刷新问题
-	document.body.addEventListener("touchmove", function(event) {
-		event.preventDefault();
-	});
 	
 }

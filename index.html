@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<title></title>
+		<title>虎狮罗盘</title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 		<style type="text/css">
 			.tools #fold {
@@ -11,61 +11,163 @@
 			}
 		</style>
 	</head>
-	<body>
-		<!-- header -->
-		<div class="header">
-			<img src="http://ii.sinelinked.com/miniProgramAssets/compass/logo2.png">
-		</div>
-		<!-- top-tool -->
-		<div class="top-tool">
+	<body id="capture">
+		<div class="scroll">
+			<!-- header -->
+			<div class="header">
+				<img src="http://ii.sinelinked.com/miniProgramAssets/compass/logo2.png">
+			</div>
+			<!-- top-tool -->
+			<div class="top-tool">
+				<div class="gradienter">
+					<span class="dot"></span>
+				</div>
+				<div class="weather">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/weather.png">
+				</div>
+			</div>
+			<!-- pan -->
+			<div class="pan">
+				<!-- line -->
+				<span class="line line-heng"></span>
+				<span class="line line-shu"></span>
+				<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan.png">
+				<img class="deg-img" src="./img/a2.png" alt="" srcset="">
+				<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
+			</div>
 
+			<!-- tools -->
+			<ul class="tools">
+				<li id="switch">
+					<div class="top">
+						<img src="http://ii.sinelinked.com/miniProgramAssets/compass/001.png">
+					</div>
+					<p>模式</p>
+				</li>
+				<li id="lock">
+					<div class="top">
+						<img src="http://ii.sinelinked.com/miniProgramAssets/compass/004.png">
+					</div>
+					<p>锁定</p>
+				</li>
+				<li id="manual">
+					<div class="top">
+						<img src="http://ii.sinelinked.com/miniProgramAssets/compass/005.png">
+					</div>
+					<p>手动</p>
+				</li>
+				<li id="fold">
+					<div class="top">
+						<img src="http://ii.sinelinked.com/miniProgramAssets/compass/003.png">
+					</div>
+					<p>收起</p>
+				</li>
+				<li id="change">
+					<div class="top">
+						<img src="http://ii.sinelinked.com/miniProgramAssets/compass/002.png">
+					</div>
+					<p>换盘</p>
+				</li>
+			</ul>
+			<div id="info">
+				<p class="info-t">
+					<strong>方位：</strong><span class="fangwei"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>度数：</strong><span
+					 class="deg"></span>
+				</p>
+				<p class="info-t">
+					<strong>经度：</strong><span class="jingdu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong>纬度：</strong><span class="weidu"></span>
+				</p>
+			</div>
+			<div id="allmap"></div>
 		</div>
-		<!-- pan -->
-		<div class="pan">
-			<img class="main-pan" id="compass" src="http://ii.sinelinked.com/miniProgramAssets/compass/pan.png">
-			<img class="deg-img" src="./img/a2.png" alt="" srcset="">
-			<img class="zhen-img" src="./img/a3.png" alt="" srcset="">
-		</div>
-		<!-- tools -->
-		<ul class="tools">
-			<li id="switch">
-				<div class="top">
-					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/001.png">
-				</div>
-				<p>模式</p>
-			</li>
-			<li id="lock">
-				<div class="top">
-					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/004.png">
-				</div>
-				<p>锁定</p>
-			</li>
-			<li id="manual">
-				<div class="top">
-					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/005.png">
-				</div>
-				<p>手动</p>
-			</li>
-			<li id="fold">
-				<div class="top">
-					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/003.png">
-				</div>
-				<p>收起</p>
-			</li>
-		</ul>
-		<div id="info">
-			<p class="info-t">
-				<strong>方位：</strong><span class="fangwei"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>度数：</strong><span class="deg"></span>
-			</p>
-			<p class="info-t">
-				<strong>经度：</strong><span class="jingdu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong>纬度：</strong><span class="weidu"></span>
-			</p>
-		</div>
-		<div id="allmap"></div>
 		<!-- switchs -->
 		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/gradienter.js" type="text/javascript" charset="utf-8"></script>
+
+		<script>
+			(function(T, h, i, n, k, P, a, g, e) {
+				g = function() {
+					P = h.createElement(i);
+					a = h.getElementsByTagName(i)[0];
+					P.src = k;
+					P.charset = "utf-8";
+					P.async = 1;
+					a.parentNode.insertBefore(P, a)
+				};
+				T["ThinkPageWeatherWidgetObject"] = n;
+				T[n] || (T[n] = function() {
+					(T[n].q = T[n].q || []).push(arguments)
+				});
+				T[n].l = +new Date();
+				if (T.attachEvent) {
+					T.attachEvent("onload", g)
+				} else {
+					T.addEventListener("load", g, false)
+				}
+			}(window, document, "script", "tpwidget", "//widget.seniverse.com/widget/chameleon.js"))
+		</script>
+		<script>
+			tpwidget("init", {
+				"flavor": "bubble",
+				"location": "WX4FBXXFKE4F",
+				"geolocation": "enabled",
+				"position": "top-left",
+				"margin": "10px 10px",
+				"language": "zh-chs",
+				"unit": "c",
+				"theme": "black",
+				"uid": "U3B80E39C7",
+				"hash": "68532161673f581383c0fa1582acb536"
+			});
+
+			var change = document.getElementById('change')
+			var compass = document.getElementById('compass')
+			var panBg = [
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map-yellow.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan-map.png',
+				'http://ii.sinelinked.com/miniProgramAssets/compass/pan.png'
+			]
+			var num = 0
+			change.addEventListener('touchstart', function() {
+				this.children[0].classList.add('active')
+			})
+			change.addEventListener('touchend', function() {
+				num++
+				if (num >= panBg.length) {
+					num = 0
+				}
+				compass.src = panBg[num]
+				this.children[0].classList.remove('active')
+			})
+
+			// 天气
+			var weather = document.querySelector('.weather')
+			var tpwthwidt
+			weather.addEventListener('touchstart', function() {
+
+				if (tpwthwidt) {
+					tpwthwidt.style.display = 'block'
+				} else {
+					tpwidget("show");
+				}
+
+				setTimeout(function() {
+					tpwthwidt = document.querySelector('.tpwthwidt')
+					if (tpwthwidt) {
+						tpwthwidt.style.display = 'none'
+					}
+				}, 5000)
+			})
+
+			// 截屏
+			// 			document.onclick = function(){
+			// 				html2canvas(document.querySelector("#capture")).then(canvas => {
+			// 					// document.body.appendChild(canvas)
+			// 					var imgUri = canvas.toDataURL();
+			// 					console.log(imgUri);
+			// 				});
+			// 			}
+		</script>
 		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FdGp9hXQHaWCaXy6wohRZFWZFjQP791a"></script>
 		<script type="text/javascript">
 			var map = new BMap.Map("allmap");
@@ -78,12 +180,14 @@
 					map.addOverlay(mk);
 					map.panTo(r.point);
 					console.log('您的位置：' + (r.point.lng).toFixed(5) + ',' + r.point.lat);
-					document.querySelector(".jingdu").innerHTML =(r.point.lng).toFixed(3);
-					document.querySelector(".weidu").innerHTML =(r.point.lat).toFixed(3);
+					document.querySelector(".jingdu").innerHTML = (r.point.lng).toFixed(3);
+					document.querySelector(".weidu").innerHTML = (r.point.lat).toFixed(3);
 				} else {
 					console.log('failed' + this.getStatus());
 				}
 			});
 		</script>
+
+
 	</body>
 </html>
