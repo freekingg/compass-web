@@ -221,11 +221,16 @@ var panOffsetLeft = compass.getBoundingClientRect().left
 var panOffsetRight = compass.getBoundingClientRect().right
 var panWidth = compass.offsetWidth / 2 //罗盘一半的宽度
 var touchX, touchY; //用于记录手指按下位置，判断手指在罗盘哪个位置
+var activeValT = 0
 compass.addEventListener('touchstart', function(e) {
+	// activeValT = compass.style.transform.match(/\d+/g)[0]
+	var sactiveValT = compass.style.transform
+	let transformMatrix = sactiveValT.slice(7, sactiveValT.length - 1).split(', ')
+	activeValT = parseFloat(transformMatrix)
 	var clientY = e.changedTouches[0].pageY
 	var clientX = e.changedTouches[0].pageX
-	var currentClentY = clientY - panOffsetTop //手指在当前盘上竖向的位置
-	var currentClentX = clientX - panOffsetLeft //手指在当前盘上横向位置
+	touchY = clientY - panOffsetTop //手指在当前盘上竖向的位置
+	touchX = clientX - panOffsetLeft //手指在当前盘上横向位置
 
 })
 compass.addEventListener('touchmove', function(e) {
@@ -233,34 +238,65 @@ compass.addEventListener('touchmove', function(e) {
 		return
 	}
 
-	console.log('touchmove')
 	var clientY = e.changedTouches[0].pageY
 	var clientX = e.changedTouches[0].pageX
 	var currentClentY = clientY - panOffsetTop //手指在当前盘上竖向的位置
 	var currentClentX = clientX - panOffsetLeft //手指在当前盘上横向位置
 	if (currentClentX > panWidth) {
 		//在右侧拖动
-		compass.style.transform = 'rotate(' + Math.round(currentClentY) + 'deg)'
+		if(currentClentY > touchY){
+			activeValT+=2
+			
+			compass.style.transform = 'rotate(' + Math.round(activeValT) + 'deg)'
+		}else{
+			activeValT-=2
+			console.log(activeValT);
+			var result=''
+			if(activeValT <= 0){
+				result = 'rotate(' + Math.round(activeValT) + 'deg)'
+			}else{
+				result = 'rotate(' + Math.round(activeValT) + 'deg)'
+			}
+			compass.style.transform = result
+		}
+		
 	} else {
-		compass.style.transform = 'rotate(-' + Math.round(currentClentY) + 'deg)'
+		//在左侧拖动
+		//在右侧拖动
+		if(currentClentY > touchY){
+			activeValT-=2
+			
+			compass.style.transform = 'rotate(' + Math.round(activeValT) + 'deg)'
+		}else{
+			activeValT+=2
+			var result=''
+			if(activeValT <= 0){
+				result = 'rotate(' + Math.round(activeValT) + 'deg)'
+			}else{
+				result = 'rotate(' + Math.round(activeValT) + 'deg)'
+			}
+			compass.style.transform = result
+		}
 	}
 })
 
 // 加减
 
 jia_btn.addEventListener('touchstart',function(){
-	var activeVal = compass.style.transform.match(/\d+/g)[0]
-	activeVal++
-	console.log(activeVal);
-	compass.style.transform = 'rotate(' + Math.round(activeVal) + 'deg)'
+	var sactiveValT = compass.style.transform
+	let transformMatrix = sactiveValT.slice(7, sactiveValT.length - 1).split(', ')
+	activeValT = parseFloat(transformMatrix)
+	activeValT--
+	compass.style.transform = 'rotate(' + Math.round(activeValT) + 'deg)'
 	
 	
 })
 jian_btn.addEventListener('touchstart',function(){
-	// var activeVal = compass.style.transform.match(/\d+/g)[0]
-	var activeVal = compass.style.transform.match(/\d+/g)[0]
-	activeVal--
-	compass.style.transform = 'rotate(' + Math.round(activeVal) + 'deg)'
+	var sactiveValT = compass.style.transform
+	let transformMatrix = sactiveValT.slice(7, sactiveValT.length - 1).split(', ')
+	activeValT = parseFloat(transformMatrix)
+	activeValT++
+	compass.style.transform = 'rotate(' + Math.round(activeValT) + 'deg)'
 	
 })
 
