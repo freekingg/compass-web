@@ -173,6 +173,8 @@ lock.addEventListener('touchend', function() {
 // 手动转盘
 var manual = document.getElementById("manual")
 var isManual = false
+var jia_btn = document.querySelector('.jia_btn')
+var jian_btn = document.querySelector('.jian_btn')
 manual.addEventListener('touchend', function() {
 	// 取消罗盘监听事件,切换为手动转盘
 	if (isAndroid) {
@@ -180,20 +182,32 @@ manual.addEventListener('touchend', function() {
 			window.addEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false);
 			this.children[0].classList.remove('active')
 			this.children[1].innerText = '手动'
+			
+			jia_btn.style.display = 'none'
+			jian_btn.style.display = 'none'
 		} else {
 			window.removeEventListener('deviceorientationabsolute', DeviceOrientationHandlerCompass, false)
 			this.children[0].classList.add('active')
 			this.children[1].innerText = '自动'
+			
+			jia_btn.style.display = 'flex'
+			jian_btn.style.display = 'flex'
 		}
 	} else {
 		if (isManual) {
 			window.addEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false);
 			this.children[0].classList.remove('active')
 			this.children[1].innerText = '手动'
+			
+			jia_btn.style.display = 'none'
+			jian_btn.style.display = 'none'
 		} else {
 			window.removeEventListener('deviceorientation', DeviceOrientationHandlerCompassIos, false)
 			this.children[0].classList.add('active')
 			this.children[1].innerText = '自动'
+			
+			jia_btn.style.display = 'flex'
+			jian_btn.style.display = 'flex'
 		}
 	}
 
@@ -230,6 +244,24 @@ compass.addEventListener('touchmove', function(e) {
 	} else {
 		compass.style.transform = 'rotate(-' + Math.round(currentClentY) + 'deg)'
 	}
+})
+
+// 加减
+
+jia_btn.addEventListener('touchstart',function(){
+	var activeVal = compass.style.transform.match(/\d+/g)[0]
+	activeVal++
+	console.log(activeVal);
+	compass.style.transform = 'rotate(' + Math.round(activeVal) + 'deg)'
+	
+	
+})
+jian_btn.addEventListener('touchstart',function(){
+	// var activeVal = compass.style.transform.match(/\d+/g)[0]
+	var activeVal = compass.style.transform.match(/\d+/g)[0]
+	activeVal--
+	compass.style.transform = 'rotate(' + Math.round(activeVal) + 'deg)'
+	
 })
 
 

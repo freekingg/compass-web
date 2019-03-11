@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<title>虎狮罗盘</title>
+		<title>虎师罗盘</title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 
 		<style type="text/css">
@@ -25,6 +25,9 @@
 			.tools li p {
 				/* color: #fff; */
 			}
+			.scroll .tools{
+				margin-top: 0.5rem;
+			}
 		</style>
 	</head>
 	<body>
@@ -42,6 +45,9 @@
 
 		<!-- pan -->
 		<div class="pan noAllow">
+			<!-- jia&jian -->
+			<div class="jia_btn">+</div>
+			<div class="jian_btn">-</div>
 			<!-- line -->
 			<span class="line line-heng"></span>
 			<span class="line line-shu"></span>
@@ -81,11 +87,17 @@
 				</div>
 				<p>换盘</p>
 			</li>
+			<li id="choose" class="upLoad">
+				<div class="top">
+					<img src="http://ii.sinelinked.com/miniProgramAssets/compass/choose_img.png">
+				</div>
+				<p>选图</p>
+			</li>
 		</ul>
 		<!-- upload -->
-		<button class="upLoad">
+		<!-- <button class="upLoad">
 			选择图片
-		</button>
+		</button> -->
 		<input type="file" id="File"  accept="image/*" />
 		</div>
 		<script src="js/switch.js" type="text/javascript" charset="utf-8"></script>

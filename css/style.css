@@ -89,8 +89,8 @@ a {
 	position: absolute;
 	height: 0.02rem;
 	background: red;
-	/* z-index: 2; */
-	z-index: 0;
+	z-index: 2;
+	/* z-index: 0; */
 	pointer-events: none;
 }
 
@@ -111,6 +111,7 @@ a {
 .pan .main-pan {
 	width: 7rem;
 	height: 7rem;
+	border-radius: 50%;
 	/* transform: translateZ(0); */
 	/* transition: .3s linear */
 }
@@ -167,11 +168,19 @@ a {
 }
 
 .tools #fold {
-	right: 0.42rem;
+	right: 2.6rem;
 }
 
 .tools #change {
-	right: 2.6rem;
+	right: 0.42rem;
+}
+.tools #choose {
+	left: 0.42rem;
+	top: -1.3rem;
+}
+.tools  #choose .top img{
+	width: 0.40rem;
+	height: 0.40rem;
 }
 
 .tools .top {
@@ -219,6 +228,7 @@ a {
 	transition: .3s;
 	opacity: 0;
 	display: none;
+	z-index: 100;
 }
 
 .switch_content {
@@ -273,7 +283,7 @@ a {
 	opacity: 1;
 }
 
-.upLoad {
+/* .upLoad {
 	width: 40%;
 	height: 0.8rem;
 	border: none;
@@ -286,7 +296,7 @@ a {
 	bottom: 0.6rem;
 	left: 50%;
 	transform: translate(-50%);
-}
+} */
 
 #File {
 	display: none;
@@ -296,4 +306,25 @@ a {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
+}
+
+.jia_btn,.jian_btn{
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 0.56rem;
+	height: 0.56rem;
+	color: #fff;
+	font-size: 0.50rem;
+	right: 0.20rem;
+	background: #a17040;
+	border-radius: 0.06rem;
+	display: none;
+}
+.jia_btn{
+	top: 0.50rem;
+}
+.jian_btn{
+	bottom: 0.50rem;
 }
