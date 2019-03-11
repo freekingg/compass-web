@@ -17,6 +17,7 @@ document.body.appendChild(div);
 // 处理各浏览器下下拉刷新问题
 //禁止下拉
 var overscroll = function(el) {
+	var f = new FormData
 	console.log(el);
 	el.addEventListener('touchstart', function() {
 		var top = el.scrollTop,
